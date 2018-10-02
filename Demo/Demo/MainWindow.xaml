@@ -20,7 +20,7 @@
         <TextBox x:Name="txtEmailAddress" HorizontalAlignment="Left" Height="23" Margin="185,133,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="txtSkypeID" HorizontalAlignment="Left" Height="23" Margin="185,164,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="txtTelephone" HorizontalAlignment="Left" Height="23" Margin="185,195,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <ListBox HorizontalAlignment="Left" Height="68" Margin="185,229,0,0" VerticalAlignment="Top" Width="120">
+        <ListBox x:Name="listPreferredContact" HorizontalAlignment="Left" Height="68" Margin="185,229,0,0" VerticalAlignment="Top" Width="120">
             <ListBoxItem Content="Email" IsSelected="True"/>
             <ListBoxItem Content="Skype"/>
             <ListBoxItem Content="Telephone"/>
@@ -28,27 +28,4 @@
         <Button x:Name="btnSubmit" Content="Submit" HorizontalAlignment="Left" Height="29" Margin="185,326,0,0" VerticalAlignment="Top" Width="120" Click="btnSubmit_Click"/>
     </Grid>
 
-    <Window.Resources>
-        <Style x:Key="textBoxInError" TargetType="{x:Type TextBox}">
-            <Style.Triggers>
-                <Trigger Property="Validation.HasError" Value="true">
-                    <Setter Property="ToolTip"
-        Value="{Binding RelativeSource={x:Static RelativeSource.Self},
-                        Path=(Validation.Errors)[0].ErrorContent}"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        <ControlTemplate x:Key="validationErrorTemplate">
-            <DockPanel>
-                <TextBlock Foreground="Red" 
-
-            DockPanel.Dock="Top">!</TextBlock>
-                <AdornedElementPlaceholder 
-
-           x:Name="ErrorAdorner"
-
-        ></AdornedElementPlaceholder>
-            </DockPanel>
-        </ControlTemplate>
-    </Window.Resources>
 </Window>

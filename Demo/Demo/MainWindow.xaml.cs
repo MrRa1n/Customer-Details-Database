@@ -22,43 +22,47 @@ namespace Demo
     public partial class MainWindow : Window
     {
         private MailingList store = new MailingList();
-        private FormValidation formValidation = new FormValidation();
+        
+
         public MainWindow()
         {
             InitializeComponent();
         }
 
-
-        private void btnSubmit_Click(object sender, RoutedEventArgs e)
+        private ContactType GetContactType()
         {
-            formValidation.Validate(txtCustomerID.Text, null);
-        }
-    }
-
-    public class FormValidation : ValidationRule
-    {
-        public FormValidation()
-        {
-
-        }
-        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
-        {
-            if (value == null)
+            if (listPreferredContact.SelectedItem.Equals("Email"))
             {
-                return new ValidationResult(false, new Exception("Field cannot be empty!"));
+                return ContactType.EMAIL;
+            }
+            else if (listPreferredContact.SelectedItem.Equals("Skype"))
+            {
+                return ContactType.SKYPE;
             }
             else
             {
-                try
-                {
-                    Int32.Parse(value.ToString());
-                }
-                catch
-                {
-                    return new ValidationResult(false, new Exception("Field must be numeric!"));
-                }
+                return ContactType.TEL;
             }
-            return ValidationResult.ValidResult;
+        }
+
+        private void btnSubmit_Click(object sender, RoutedEventArgs e)
+        {
+            if (!int.TryParse(txtCustomerID.Text, out int n))
+            {
+                MessageBox.Show("Enter a number you dick!");
+                return;
+            }
+            Customer customer = new Customer
+            {
+                ID = int.Parse(txtCustomerID.Text),
+                FirstName = txtFirstName.Text,
+                LastName = txtSurname.Text,
+                EmailAddress = txtEmailAddress.Text,
+                SkypeID = txtSkypeID.Text,
+                TelephoneNo = txtTelephone.Text,
+                PreferredContact = GetContactType()
+            };
+
         }
     }
 }
