@@ -63,6 +63,7 @@ namespace Demo
                 PreferredContact = GetContactType()
             };
 
+            store.Add(customer);
         }
     }
 }
