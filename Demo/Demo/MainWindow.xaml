@@ -10,12 +10,12 @@
         <Label x:Name="lblSkypeID" Content="Skype ID:" HorizontalAlignment="Left" Margin="120,164,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lblTelephone" Content="Telephone:" HorizontalAlignment="Left" Margin="112,195,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lblPreferredContact" Content="Preferred Contact:" HorizontalAlignment="Left" Margin="73,226,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtCustomerID" HorizontalAlignment="Left" Height="23" Margin="185,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120">
+        <TextBox x:Name="txtCustomerID" HorizontalAlignment="Left" Height="23" Margin="185,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" AutomationProperties.IsRequiredForForm="True">
             <TextBox.DataContext>
                 <DataErrorValidationRule/>
             </TextBox.DataContext>
         </TextBox>
-        <TextBox x:Name="txtFirstName" HorizontalAlignment="Left" Height="23" Margin="185,71,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtFirstName" HorizontalAlignment="Left" Height="23" Margin="185,71,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" AutomationProperties.IsRequiredForForm="True"/>
         <TextBox x:Name="txtSurname" HorizontalAlignment="Left" Height="23" Margin="185,102,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="txtEmailAddress" HorizontalAlignment="Left" Height="23" Margin="185,133,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="txtSkypeID" HorizontalAlignment="Left" Height="23" Margin="185,164,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
