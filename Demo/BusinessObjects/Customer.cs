@@ -16,15 +16,15 @@ namespace BusinessObjects
     {
         [Required(ErrorMessage = "ID is a required field.")]
         public int ID { get; set; }
-        [Required(ErrorMessage = "First Name is a required field.")]
+        [Required(ErrorMessage = "First name is a required field.")]
         public string FirstName { get; set; }
-
+        [Required(ErrorMessage = "Surname is a required field.")]
         public string LastName { get; set; }
 
         public string EmailAddress { get; set; }
 
         public string SkypeID { get; set; }
-
+        [Required(ErrorMessage = "Telephone is a required field.")]
         public string TelephoneNo { get; set; }
 
         public ContactType PreferredContact { get; set; }
@@ -44,10 +44,11 @@ namespace BusinessObjects
             }
         }
 
-        public void Validate()
+        public String Validate()
         {
             ValidationContext context = new ValidationContext(this, serviceProvider: null, items: null);
             List<ValidationResult> results = new List<ValidationResult>();
+
             bool isValid = Validator.TryValidateObject(this, context, results, false);
 
             if (isValid == false)
@@ -57,8 +58,9 @@ namespace BusinessObjects
                 {
                     sbrErrors.AppendLine(validationResult.ErrorMessage);
                 }
-                throw new ValidationException(sbrErrors.ToString());
+                return sbrErrors.ToString();
             }
+            return "Success!";
         }
     }
 }
