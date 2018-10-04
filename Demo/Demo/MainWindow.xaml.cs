@@ -79,8 +79,8 @@ namespace Demo
                     PreferredContact = GetContactType()
                 };
 
-                String fieldsValidated = customer.Validate();
-                MessageBox.Show(fieldsValidated.ToString(), "Error - Please complete all fields!");
+                string fieldsValidated = customer.Validate();
+                MessageBox.Show(fieldsValidated.ToString(), "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
 
                 store.Add(customer);
 

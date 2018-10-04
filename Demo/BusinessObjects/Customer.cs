@@ -26,7 +26,7 @@ namespace BusinessObjects
         public string SkypeID { get; set; }
         [Required(ErrorMessage = "Telephone is a required field.")]
         public string TelephoneNo { get; set; }
-
+        [Required(ErrorMessage = "Preferred contact is a required field.")]
         public ContactType PreferredContact { get; set; }
 
         public String GetPreferredContact(ContactType contactType)
@@ -44,23 +44,25 @@ namespace BusinessObjects
             }
         }
 
-        public String Validate()
+        public string Validate()
         {
-            ValidationContext context = new ValidationContext(this, serviceProvider: null, items: null);
-            List<ValidationResult> results = new List<ValidationResult>();
+            // Create new context to describe the tpye being validated (Customer object)
+            ValidationContext validationContext = new ValidationContext(this, null, null);
+            List<ValidationResult> validationResults = new List<ValidationResult>();
 
-            bool isValid = Validator.TryValidateObject(this, context, results, false);
+            // Attempt to validate object, storing each failed validations in validationResults
+            bool isValid = Validator.TryValidateObject(this, validationContext, validationResults, false);
 
             if (isValid == false)
             {
-                StringBuilder sbrErrors = new StringBuilder();
-                foreach (ValidationResult validationResult in results)
+                StringBuilder validationErrors = new StringBuilder();
+                foreach (ValidationResult validationResult in validationResults)
                 {
-                    sbrErrors.AppendLine(validationResult.ErrorMessage);
+                    validationErrors.AppendLine(validationResult.ErrorMessage);
                 }
-                return sbrErrors.ToString();
+                return validationErrors.ToString();
             }
-            return "Success!";
+            return "Data successfully stored";
         }
     }
 }
