@@ -40,7 +40,7 @@ namespace BusinessObjects
                 case ContactType.TEL:
                     return "Tel: " + TelephoneNo;
                 default:
-                    throw new Exception("Error: Invalid option!");
+                    throw new Exception("Please select a valid option");
             }
         }
 
@@ -51,18 +51,19 @@ namespace BusinessObjects
             List<ValidationResult> validationResults = new List<ValidationResult>();
 
             // Attempt to validate object, storing each failed validations in validationResults
-            bool isValid = Validator.TryValidateObject(this, validationContext, validationResults, false);
+            bool isValidated = Validator.TryValidateObject(this, validationContext, validationResults, false);
 
-            if (isValid == false)
+            if (isValidated == false)
             {
+                // If field is empty, append each error to string and return the string
                 StringBuilder validationErrors = new StringBuilder();
-                foreach (ValidationResult validationResult in validationResults)
+                foreach (var validationResult in validationResults)
                 {
                     validationErrors.AppendLine(validationResult.ErrorMessage);
                 }
                 return validationErrors.ToString();
             }
-            return "Data successfully stored";
+            return "Data has been stored successfully";
         }
     }
 }

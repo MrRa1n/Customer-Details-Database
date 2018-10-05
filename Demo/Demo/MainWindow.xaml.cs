@@ -30,7 +30,7 @@ namespace Demo
             InitializeComponent();
         }
 
-        private ContactType GetContactType()
+        private ContactType SetContactType()
         {
             if (listPreferredContact.SelectedItem.Equals("Email"))
             {
@@ -56,7 +56,7 @@ namespace Demo
             txtTelephone.Clear();
         }
 
-        private void btnSubmit_Click(object sender, RoutedEventArgs e)
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             if (!int.TryParse(txtCustomerID.Text, out int parsedID))
             {
@@ -76,11 +76,8 @@ namespace Demo
                     EmailAddress = txtEmailAddress.Text,
                     SkypeID = txtSkypeID.Text,
                     TelephoneNo = txtTelephone.Text,
-                    PreferredContact = GetContactType()
+                    PreferredContact = SetContactType()
                 };
-
-                string fieldsValidated = customer.Validate();
-                MessageBox.Show(fieldsValidated.ToString(), "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
 
                 store.Add(customer);
 
@@ -88,6 +85,32 @@ namespace Demo
             }
             
 
+        }
+
+        private void btnFind_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Customer customer = store.Find(int.Parse(txtCustomerID.Text));
+
+                if (customer == null)
+                {
+                    throw new Exception("Customer not found!");
+                }
+
+                txtCustomerID.Text = customer.ID.ToString();
+                txtFirstName.Text = customer.FirstName;
+                txtSurname.Text = customer.LastName;
+                txtEmailAddress.Text = customer.EmailAddress;
+                txtSkypeID.Text = customer.SkypeID;
+                txtTelephone.Text = customer.TelephoneNo;
+                listPreferredContact.SelectedIndex = (int)customer.PreferredContact;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
         }
     }
 }
