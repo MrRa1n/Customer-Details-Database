@@ -30,22 +30,6 @@ namespace Demo
             InitializeComponent();
         }
 
-        private ContactType SetContactType()
-        {
-            if (listPreferredContact.SelectedItem.Equals("Email"))
-            {
-                return ContactType.EMAIL;
-            }
-            else if (listPreferredContact.SelectedItem.Equals("Skype"))
-            {
-                return ContactType.SKYPE;
-            }
-            else
-            {
-                return ContactType.TEL;
-            }
-        }
-
         private void ClearAllFields()
         {
             txtCustomerID.Clear();
@@ -56,8 +40,26 @@ namespace Demo
             txtTelephone.Clear();
         }
 
+        // Method for setting the customer's preferred method of contact
+        private ContactType SetContactType()
+        {
+            if (listPreferredContact.SelectedIndex == 0)
+            {
+                return ContactType.EMAIL;
+            }
+            else if (listPreferredContact.SelectedIndex == 1)
+            {
+                return ContactType.SKYPE;
+            }
+            else
+            {
+                return ContactType.TEL;
+            }
+        }
+
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
+            // Check if an integer has been entered into the ID field and if it's in range
             if (!int.TryParse(txtCustomerID.Text, out int parsedID))
             {
                 MessageBox.Show("Enter a numerical value");
@@ -68,29 +70,36 @@ namespace Demo
             }
             else
             {
-                Customer customer = new Customer
+                try
                 {
-                    ID = parsedID,
-                    FirstName = txtFirstName.Text,
-                    LastName = txtSurname.Text,
-                    EmailAddress = txtEmailAddress.Text,
-                    SkypeID = txtSkypeID.Text,
-                    TelephoneNo = txtTelephone.Text,
-                    PreferredContact = SetContactType()
-                };
+                    // Create new instance of customer, supplying the values from form fields.
+                    Customer customer = new Customer
+                    {
+                        ID = parsedID,
+                        FirstName = txtFirstName.Text,
+                        LastName = txtSurname.Text,
+                        EmailAddress = txtEmailAddress.Text,
+                        SkypeID = txtSkypeID.Text,
+                        TelephoneNo = txtTelephone.Text,
+                        PreferredContact = SetContactType()
+                    };
 
-                store.Add(customer);
+                    store.Add(customer);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
 
                 ClearAllFields();
             }
-            
-
         }
 
         private void btnFind_Click(object sender, RoutedEventArgs e)
         {
             try
             {
+                // Find the customer by the supplied customer ID
                 Customer customer = store.Find(int.Parse(txtCustomerID.Text));
 
                 if (customer == null)
@@ -98,6 +107,7 @@ namespace Demo
                     throw new Exception("Customer not found!");
                 }
 
+                // Display the found information in form fields
                 txtCustomerID.Text = customer.ID.ToString();
                 txtFirstName.Text = customer.FirstName;
                 txtSurname.Text = customer.LastName;
@@ -111,6 +121,30 @@ namespace Demo
                 MessageBox.Show(ex.Message);
             }
             
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Check to see if the customer exists in the store
+                Customer customer = store.Find(int.Parse(txtCustomerID.Text));
+
+                // Throw new exception if customer doesn't exist, otherwise delete the customer
+                if (customer == null)
+                {
+                    throw new Exception("Customer not found!");
+                }
+                else
+                {
+                    store.Delete(customer.ID);
+                    MessageBox.Show("Customer deleted successfully");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

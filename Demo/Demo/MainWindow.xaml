@@ -31,6 +31,7 @@
         </ListBox>
         <Button x:Name="btnAdd" Content="Add" HorizontalAlignment="Left" Height="23" Margin="6.4,40,0,0" VerticalAlignment="Top" Width="97" Click="btnAdd_Click" Grid.Column="1"/>
         <Button x:Name="btnFind" Content="Find" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="6.4,71,0,0" VerticalAlignment="Top" Width="97" Click="btnFind_Click"/>
+        <Button x:Name="btnDelete" Content="Delete" Grid.Column="1" HorizontalAlignment="Left" Margin="6.667,102,0,0" VerticalAlignment="Top" Width="97" Height="23" Click="btnDelete_Click"/>
     </Grid>
 
 </Window>
