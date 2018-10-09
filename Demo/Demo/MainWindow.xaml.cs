@@ -24,7 +24,6 @@ namespace Demo
     {
         private MailingList store = new MailingList();
         
-
         public MainWindow()
         {
             InitializeComponent();
@@ -57,42 +56,43 @@ namespace Demo
             }
         }
 
+        private void GenerateCustomerID()
+        {
+            const int customerID = 10001;
+
+
+        }
+
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            // Check if an integer has been entered into the ID field and if it's in range
-            if (!int.TryParse(txtCustomerID.Text, out int parsedID))
+            try
             {
-                MessageBox.Show("Enter a numerical value");
-            }
-            else if (parsedID < 10001 || parsedID > 50000)
-            {
-                MessageBox.Show("Please enter a number between 10001 and 50000");
-            }
-            else
-            {
-                try
-                {
-                    // Create new instance of customer, supplying the values from form fields.
-                    Customer customer = new Customer
-                    {
-                        ID = parsedID,
-                        FirstName = txtFirstName.Text,
-                        LastName = txtSurname.Text,
-                        EmailAddress = txtEmailAddress.Text,
-                        SkypeID = txtSkypeID.Text,
-                        TelephoneNo = txtTelephone.Text,
-                        PreferredContact = SetContactType()
-                    };
+                int customerID = 10001;
 
-                    store.Add(customer);
-                }
-                catch (Exception ex)
+                Customer cust = store.Find(customerID);
+
+                if (cust != null && customerID == cust.ID)
                 {
-                    MessageBox.Show(ex.Message);
+                    customerID = cust.ID++;
                 }
 
-                ClearAllFields();
+                Customer customer = new Customer
+                {
+                    ID = customerID,
+                    FirstName = txtFirstName.Text,
+                    LastName = txtSurname.Text,
+                    EmailAddress = txtEmailAddress.Text,
+                    SkypeID = txtSkypeID.Text,
+                    TelephoneNo = txtTelephone.Text,
+                    PreferredContact = SetContactType()
+                };
+
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
         }
 
         private void btnFind_Click(object sender, RoutedEventArgs e)

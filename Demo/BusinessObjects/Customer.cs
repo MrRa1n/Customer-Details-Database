@@ -16,16 +16,20 @@ namespace BusinessObjects
     {
         [Required(ErrorMessage = "ID is a required field.")]
         public int ID { get; set; }
+
         [Required(ErrorMessage = "First name is a required field.")]
         public string FirstName { get; set; }
+
         [Required(ErrorMessage = "Surname is a required field.")]
         public string LastName { get; set; }
 
         public string EmailAddress { get; set; }
 
         public string SkypeID { get; set; }
+
         [Required(ErrorMessage = "Telephone is a required field.")]
         public string TelephoneNo { get; set; }
+
         [Required(ErrorMessage = "Preferred contact is a required field.")]
         public ContactType PreferredContact { get; set; }
 
