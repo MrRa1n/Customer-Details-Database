@@ -60,7 +60,9 @@ namespace Demo
         {
             try
             {
-                Console.WriteLine(store.Matrics.Count);
+                
+                
+                Console.WriteLine();
 
                 int customerID;
 
