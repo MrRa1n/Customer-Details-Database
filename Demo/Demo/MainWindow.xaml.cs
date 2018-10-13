@@ -56,25 +56,25 @@ namespace Demo
             }
         }
 
-        private void GenerateCustomerID()
-        {
-            const int customerID = 10001;
-
-
-        }
-
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                int customerID = 10001;
+                Console.WriteLine(store.Matrics.Count);
 
-                Customer cust = store.Find(customerID);
+                int customerID;
 
-                if (cust != null && customerID == cust.ID)
+                if (store.Matrics.Count < 1)
                 {
-                    customerID = cust.ID++;
+                    customerID = 10001;
+                    Console.WriteLine(customerID);
                 }
+                else
+                {
+                    customerID = 10001 + 1;
+                    Console.WriteLine(customerID);
+                }
+
 
                 Customer customer = new Customer
                 {
