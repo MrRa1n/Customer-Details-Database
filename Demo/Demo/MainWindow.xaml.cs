@@ -23,6 +23,8 @@ namespace Demo
     public partial class MainWindow : Window
     {
         private MailingList store = new MailingList();
+        private int customerCount = 0;
+        private int customerID = 10001;
         
         public MainWindow()
         {
@@ -60,23 +62,10 @@ namespace Demo
         {
             try
             {
-                
-                
-                Console.WriteLine();
-
-                int customerID;
-
-                if (store.Matrics.Count < 1)
+                if (customerCount > 0)
                 {
-                    customerID = 10001;
-                    Console.WriteLine(customerID);
+                    customerID++;
                 }
-                else
-                {
-                    customerID = 10001 + 1;
-                    Console.WriteLine(customerID);
-                }
-
 
                 Customer customer = new Customer
                 {
@@ -89,6 +78,12 @@ namespace Demo
                     PreferredContact = SetContactType()
                 };
 
+                store.Add(customer);
+
+                listCustomerNames.Items.Add(customer.ID + " : " + customer.FirstName + " " + customer.LastName);
+                ClearAllFields();
+
+                customerCount++;
             }
             catch (Exception ex)
             {
