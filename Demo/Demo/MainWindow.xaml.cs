@@ -143,5 +143,11 @@ namespace Demo
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void listCustomerNames_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Add code here to check which item is selected
+            // and get its customerID
+        }
     }
 }
