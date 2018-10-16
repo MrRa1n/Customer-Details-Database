@@ -14,6 +14,8 @@ namespace BusinessObjects
     }
     public class Customer
     {
+        public StringBuilder validationErrors { get; set; }
+
         [Required(ErrorMessage = "ID is a required field.")]
         public int ID { get; set; }
 
@@ -48,26 +50,23 @@ namespace BusinessObjects
             }
         }
 
-        public string Validate()
+        public bool Validate()
         {
-            // Create new context to describe the tpye being validated (Customer object)
-            ValidationContext validationContext = new ValidationContext(this, null, null);
             List<ValidationResult> validationResults = new List<ValidationResult>();
-
             // Attempt to validate object, storing each failed validations in validationResults
-            bool isValidated = Validator.TryValidateObject(this, validationContext, validationResults, false);
+            bool isValidated = Validator.TryValidateObject(this, new ValidationContext(this, null, null), validationResults, false);
 
             if (isValidated == false)
             {
                 // If field is empty, append each error to string and return the string
-                StringBuilder validationErrors = new StringBuilder();
+                validationErrors = new StringBuilder();
                 foreach (var validationResult in validationResults)
                 {
                     validationErrors.AppendLine(validationResult.ErrorMessage);
                 }
-                return validationErrors.ToString();
+                return false;
             }
-            return "Data has been stored successfully";
+            return true;
         }
     }
 }

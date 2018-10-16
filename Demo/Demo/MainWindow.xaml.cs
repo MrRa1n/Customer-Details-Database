@@ -31,6 +31,24 @@ namespace Demo
             InitializeComponent();
         }
 
+        private void DisplayCustomerDetails(Customer customer)
+        {
+            try
+            {
+                txtCustomerID.Text = customer.ID.ToString();
+                txtFirstName.Text = customer.FirstName;
+                txtSurname.Text = customer.LastName;
+                txtEmailAddress.Text = customer.EmailAddress;
+                txtSkypeID.Text = customer.SkypeID;
+                txtTelephone.Text = customer.TelephoneNo;
+                listPreferredContact.SelectedIndex = (int)customer.PreferredContact;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
         private void ClearAllFields()
         {
             txtCustomerID.Clear();
@@ -39,9 +57,9 @@ namespace Demo
             txtEmailAddress.Clear();
             txtSkypeID.Clear();
             txtTelephone.Clear();
+            listPreferredContact.SelectedIndex = 0;
         }
 
-        // Method for setting the customer's preferred method of contact
         private ContactType SetContactType()
         {
             if (listPreferredContact.SelectedIndex == 0)
@@ -78,9 +96,17 @@ namespace Demo
                     PreferredContact = SetContactType()
                 };
 
+                // Check perform validation on required fields
+                if (customer.Validate() == false)
+                {
+                    throw new Exception(customer.validationErrors.ToString());
+                }
+                
                 store.Add(customer);
 
-                listCustomerNames.Items.Add(customer.ID + " : " + customer.FirstName + " " + customer.LastName);
+                // Add the customer's ID and name to the ListBox
+                listCustomerNames.Items.Add(customer.ID + " " + customer.FirstName + " " + customer.LastName);
+
                 ClearAllFields();
 
                 customerCount++;
@@ -101,17 +127,10 @@ namespace Demo
 
                 if (customer == null)
                 {
-                    throw new Exception("Customer not found!");
+                    throw new Exception("Customer not found.");
                 }
 
-                // Display the found information in form fields
-                txtCustomerID.Text = customer.ID.ToString();
-                txtFirstName.Text = customer.FirstName;
-                txtSurname.Text = customer.LastName;
-                txtEmailAddress.Text = customer.EmailAddress;
-                txtSkypeID.Text = customer.SkypeID;
-                txtTelephone.Text = customer.TelephoneNo;
-                listPreferredContact.SelectedIndex = (int)customer.PreferredContact;
+                DisplayCustomerDetails(customer);
             }
             catch (Exception ex)
             {
@@ -124,18 +143,25 @@ namespace Demo
         {
             try
             {
+                if (String.IsNullOrWhiteSpace(txtCustomerID.Text))
+                {
+                    throw new Exception("No customer ID provided.");
+                }
+
                 // Check to see if the customer exists in the store
                 Customer customer = store.Find(int.Parse(txtCustomerID.Text));
 
                 // Throw new exception if customer doesn't exist, otherwise delete the customer
                 if (customer == null)
                 {
-                    throw new Exception("Customer not found!");
+                    throw new Exception("Customer not found.");
                 }
                 else
                 {
                     store.Delete(customer.ID);
-                    MessageBox.Show("Customer deleted successfully");
+                    ClearAllFields();
+                    listCustomerNames.Items.Remove(listCustomerNames.SelectedItem);
+                    MessageBox.Show("Customer deleted successfully.");
                 }
             }
             catch (Exception ex)
@@ -146,8 +172,43 @@ namespace Demo
 
         private void listCustomerNames_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            // Add code here to check which item is selected
-            // and get its customerID
+            try
+            {
+                // Get the value of the selected item in list
+                String selectedCustomer = listCustomerNames.SelectedItem.ToString();
+                // Split the item where space occurs
+                String[] split = selectedCustomer.Split(' ');
+                // Store the parsed ID
+                int selectedCustomerID = int.Parse(split[0]);
+                // Search for the customer in the database
+                Customer customer = store.Find(selectedCustomerID);
+
+                DisplayCustomerDetails(customer);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            
+        }
+
+        private void btnListAll_Click(object sender, RoutedEventArgs e)
+        {
+            CustomerDetails customerDetails = new CustomerDetails(store);
+            customerDetails.Show();
+            
+        }
+
+        private void SplitCustomers()
+        {
+            // Get the value of the selected item in list
+            String selectedCustomer = listCustomerNames.SelectedItem.ToString();
+            // Split the item where space occurs
+            String[] split = selectedCustomer.Split(' ');
+            // Store the parsed ID
+            int selectedCustomerID = int.Parse(split[0]);
+            // Search for the customer in the database
+            Customer customer = store.Find(selectedCustomerID);
         }
     }
 }
