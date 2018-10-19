@@ -60,6 +60,8 @@ namespace Demo
             listPreferredContact.SelectedIndex = 0;
         }
 
+        // Method to get the currently selected contact method from the 
+        // ListBox and return its enum value.
         private ContactType SetContactType()
         {
             if (listPreferredContact.SelectedIndex == 0)
@@ -80,6 +82,7 @@ namespace Demo
         {
             try
             {
+                // If a customer already exists, increment the ID by 1
                 if (customerCount > 0)
                 {
                     customerID++;
@@ -195,7 +198,7 @@ namespace Demo
         private void btnListAll_Click(object sender, RoutedEventArgs e)
         {
             CustomerDetails customerDetails = new CustomerDetails(store);
-            customerDetails.Show();
+            customerDetails.ShowDialog();
             
         }
 

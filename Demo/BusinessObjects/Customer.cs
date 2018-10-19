@@ -24,7 +24,7 @@ namespace BusinessObjects
 
         [Required(ErrorMessage = "Surname is a required field.")]
         public string LastName { get; set; }
-
+        
         public string EmailAddress { get; set; }
 
         public string SkypeID { get; set; }
