@@ -161,9 +161,12 @@ namespace Demo
                 }
                 else
                 {
+                    //RemoveCustomerFromList();
+
                     store.Delete(customer.ID);
+                    
                     ClearAllFields();
-                    listCustomerNames.Items.Remove(listCustomerNames.SelectedItem);
+                    
                     MessageBox.Show("Customer deleted successfully.");
                 }
             }
@@ -177,6 +180,8 @@ namespace Demo
         {
             try
             {
+                //Customer customer = SplitCustomers();
+
                 // Get the value of the selected item in list
                 String selectedCustomer = listCustomerNames.SelectedItem.ToString();
                 // Split the item where space occurs
@@ -190,7 +195,7 @@ namespace Demo
             }
             catch (Exception ex)
             {
-
+                MessageBox.Show(ex.Message);
             }
             
         }
@@ -199,10 +204,9 @@ namespace Demo
         {
             CustomerDetails customerDetails = new CustomerDetails(store);
             customerDetails.ShowDialog();
-            
         }
 
-        private void SplitCustomers()
+        private Customer SplitCustomers()
         {
             // Get the value of the selected item in list
             String selectedCustomer = listCustomerNames.SelectedItem.ToString();
@@ -211,7 +215,20 @@ namespace Demo
             // Store the parsed ID
             int selectedCustomerID = int.Parse(split[0]);
             // Search for the customer in the database
-            Customer customer = store.Find(selectedCustomerID);
+            return store.Find(selectedCustomerID);
+        }
+
+        private void RemoveCustomerFromList()
+        {
+            if (listCustomerNames.Items.Count == 0)
+            {
+                return;
+            }
+            else
+            {
+                listCustomerNames.Items.Remove(listCustomerNames.SelectedItem);
+                listCustomerNames.SelectedIndex = 0;
+            }
         }
     }
 }

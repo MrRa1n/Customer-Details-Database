@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
-using System.Linq;
+using System.Net.Mail;
 using System.Text;
 
 namespace BusinessObjects
@@ -20,17 +20,17 @@ namespace BusinessObjects
         public int ID { get; set; }
 
         [Required(ErrorMessage = "First name is a required field.")]
-        public string FirstName { get; set; }
+        public String FirstName { get; set; }
 
         [Required(ErrorMessage = "Surname is a required field.")]
-        public string LastName { get; set; }
+        public String LastName { get; set; }
         
-        public string EmailAddress { get; set; }
+        public String EmailAddress { get; set; }
 
-        public string SkypeID { get; set; }
+        public String SkypeID { get; set; }
 
         [Required(ErrorMessage = "Telephone is a required field.")]
-        public string TelephoneNo { get; set; }
+        public String TelephoneNo { get; set; }
 
         [Required(ErrorMessage = "Preferred contact is a required field.")]
         public ContactType PreferredContact { get; set; }
@@ -53,10 +53,11 @@ namespace BusinessObjects
         public bool Validate()
         {
             List<ValidationResult> validationResults = new List<ValidationResult>();
+            MailAddress email = new MailAddress(EmailAddress);
             // Attempt to validate object, storing each failed validations in validationResults
             bool isValidated = Validator.TryValidateObject(this, new ValidationContext(this, null, null), validationResults, false);
-
-            if (isValidated == false)
+            
+            if (isValidated == false && !email.Host.Contains("@"))
             {
                 // If field is empty, append each error to string and return the string
                 validationErrors = new StringBuilder();
@@ -68,5 +69,7 @@ namespace BusinessObjects
             }
             return true;
         }
+
+        
     }
 }
