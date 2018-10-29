@@ -161,7 +161,7 @@ namespace Demo
                 }
                 else
                 {
-                    //RemoveCustomerFromList();
+                    listCustomerNames.Items.Remove(listCustomerNames.SelectedItem);
 
                     store.Delete(customer.ID);
                     
@@ -180,8 +180,6 @@ namespace Demo
         {
             try
             {
-                //Customer customer = SplitCustomers();
-
                 // Get the value of the selected item in list
                 String selectedCustomer = listCustomerNames.SelectedItem.ToString();
                 // Split the item where space occurs
@@ -193,42 +191,20 @@ namespace Demo
 
                 DisplayCustomerDetails(customer);
             }
+            catch (NullReferenceException)
+            {
+                return;
+            }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-            
         }
 
         private void btnListAll_Click(object sender, RoutedEventArgs e)
         {
             CustomerDetails customerDetails = new CustomerDetails(store);
             customerDetails.ShowDialog();
-        }
-
-        private Customer SplitCustomers()
-        {
-            // Get the value of the selected item in list
-            String selectedCustomer = listCustomerNames.SelectedItem.ToString();
-            // Split the item where space occurs
-            String[] split = selectedCustomer.Split(' ');
-            // Store the parsed ID
-            int selectedCustomerID = int.Parse(split[0]);
-            // Search for the customer in the database
-            return store.Find(selectedCustomerID);
-        }
-
-        private void RemoveCustomerFromList()
-        {
-            if (listCustomerNames.Items.Count == 0)
-            {
-                return;
-            }
-            else
-            {
-                listCustomerNames.Items.Remove(listCustomerNames.SelectedItem);
-                listCustomerNames.SelectedIndex = 0;
-            }
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
-using System.Net.Mail;
 using System.Text;
 
 namespace BusinessObjects
@@ -14,7 +13,7 @@ namespace BusinessObjects
     }
     public class Customer
     {
-        public StringBuilder validationErrors { get; set; }
+        public StringBuilder validationErrors { get; private set; }
 
         [Required(ErrorMessage = "ID is a required field.")]
         public int ID { get; set; }
@@ -53,7 +52,7 @@ namespace BusinessObjects
         public bool Validate()
         {
             List<ValidationResult> validationResults = new List<ValidationResult>();
-            MailAddress email = new MailAddress(EmailAddress);
+            System.Net.Mail.MailAddress email = new System.Net.Mail.MailAddress(EmailAddress);
             // Attempt to validate object, storing each failed validations in validationResults
             bool isValidated = Validator.TryValidateObject(this, new ValidationContext(this, null, null), validationResults, false);
             
