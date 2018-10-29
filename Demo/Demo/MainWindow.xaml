@@ -1,7 +1,7 @@
 ﻿<Window x:Name="frmCustomerInput" x:Class="Demo.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="326.562" Width="840.813">
+        Title="Customer Input Form" Height="326.562" Width="840.813">
     <Grid Margin="0,0,3.2,0.6">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="431*"/>
