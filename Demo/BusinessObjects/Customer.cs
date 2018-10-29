@@ -17,7 +17,7 @@ namespace BusinessObjects
     /// <summary>
     /// Author: Toby Cook
     /// Description: Contains all the properties relating to the customer and validation for each property.
-    /// Last modified: 15:15 29/10/2018
+    /// Last modified: 29/10/2018
     /// </summary>
     public class Customer
     {

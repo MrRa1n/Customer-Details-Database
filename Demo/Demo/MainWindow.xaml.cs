@@ -6,7 +6,9 @@ using BusinessObjects;
 namespace Demo
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Author: Toby Cook
+    /// Description: Interaction logic for MainWindow.xaml
+    /// Last Modified: 29/10/2018
     /// </summary>
     public partial class MainWindow : Window
     {
