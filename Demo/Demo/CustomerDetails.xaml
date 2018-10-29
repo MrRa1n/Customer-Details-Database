@@ -5,17 +5,32 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Demo"
         mc:Ignorable="d"
-        Title="CustomerDetails" Height="450" Width="674.074" Loaded="frmCustomerDetails_Loaded">
+        Title="CustomerDetails" Loaded="frmCustomerDetails_Loaded">
     <Grid Margin="0,0,3.6,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="241*"/>
             <ColumnDefinition Width="91*"/>
         </Grid.ColumnDefinitions>
-        <DataGrid x:Name="gridCustomerDetails" ItemsSource="{Binding}" HorizontalAlignment="Left" Height="400" Margin="10,10,0,0" VerticalAlignment="Top" Width="644" Grid.ColumnSpan="2">
+        <DataGrid x:Name="gridCustomerDetails" ItemsSource="{Binding}" HorizontalAlignment="Stretch" Margin="10" VerticalAlignment="Stretch" Grid.ColumnSpan="2" RenderTransformOrigin="0.5,0.5" GridLinesVisibility="Horizontal" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}"/>
             </DataGrid.Columns>
+            <DataGrid.CellStyle>
+                <Style TargetType="DataGridCell">
+                    <Setter Property="Padding" Value="0,5,10,5"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type DataGridCell}">
+                                <Border Padding="{TemplateBinding Padding}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                                    <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </DataGrid.CellStyle>
         </DataGrid>
+        <DockPanel HorizontalAlignment="Left" LastChildFill="False" Margin="10,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
 
     </Grid>
 </Window>

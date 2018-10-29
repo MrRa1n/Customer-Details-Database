@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Data;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using BusinessObjects;
+
 namespace Demo
 {
     /// <summary>
@@ -29,9 +19,7 @@ namespace Demo
 
         private void frmCustomerDetails_Loaded(object sender, RoutedEventArgs e)
         {
-            // Create new variable to store current customer details
-            Customer currentCustomer;
-
+            
             // Creates new instance of DataTable to display customer details
             DataTable customerTable = new DataTable();
 
@@ -44,7 +32,9 @@ namespace Demo
             customerTable.Columns.Add("Telephone");
             customerTable.Columns.Add("Preferred Contact");
 
-            
+            // Create new variable to store current customer details
+            Customer currentCustomer;
+
             foreach (int customerId in _store.Matrics)
             {
                 // Return customer based on the customerId

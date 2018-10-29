@@ -1,18 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
 using System.Windows;
-using System.ComponentModel.DataAnnotations;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using BusinessObjects;
 
 namespace Demo
@@ -25,12 +13,17 @@ namespace Demo
         private MailingList store = new MailingList();
         private int customerCount = 0;
         private int customerID = 10001;
+        private int prevCustomerID = 10001;
         
         public MainWindow()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Displays the information about the customer in the form fields.
+        /// </summary>
+        /// <param name="customer">Customer object</param>
         private void DisplayCustomerDetails(Customer customer)
         {
             try
@@ -49,6 +42,9 @@ namespace Demo
             }
         }
 
+        /// <summary>
+        /// Clears any data that has been typed into the form fields.
+        /// </summary>
         private void ClearAllFields()
         {
             txtCustomerID.Clear();
@@ -60,8 +56,10 @@ namespace Demo
             listPreferredContact.SelectedIndex = 0;
         }
 
-        // Method to get the currently selected contact method from the 
-        // ListBox and return its enum value.
+        /// <summary>
+        /// Method to get the currently selected contact method from the ListBox and return its enum value.
+        /// </summary>
+        /// <returns>ContactType value <c>EMAIL</c>, <c>SKYPE</c> or <c>TEL</c> for customer</returns>
         private ContactType SetContactType()
         {
             if (listPreferredContact.SelectedIndex == 0)
@@ -78,12 +76,19 @@ namespace Demo
             }
         }
 
+        /// <summary>
+        /// Event handler for adding a new customer to the database. Performs validation 
+        /// to check required fields are not blank.
+        /// </summary>
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                // If a customer already exists, increment the ID by 1
-                if (customerCount > 0)
+                // Only increment Customer ID if
+                // - a customer exists
+                // - the current ID matches the previous ID
+                // - the current customer ID is less than 50000
+                if (customerCount > 0 && prevCustomerID == customerID && customerID < 50000)
                 {
                     customerID++;
                 }
@@ -106,10 +111,10 @@ namespace Demo
                 }
                 
                 store.Add(customer);
-
+                // Set the previous customer ID to the one that has been added to store
+                prevCustomerID = customerID;
                 // Add the customer's ID and name to the ListBox
                 listCustomerNames.Items.Add(customer.ID + " " + customer.FirstName + " " + customer.LastName);
-
                 ClearAllFields();
 
                 customerCount++;
@@ -118,9 +123,13 @@ namespace Demo
             {
                 MessageBox.Show(ex.Message);
             }
-            
+
         }
 
+        /// <summary>
+        /// Event handler for searching for customer details in database by Customer ID.
+        /// Displays customer details in form fields once found
+        /// </summary>
         private void btnFind_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -139,9 +148,14 @@ namespace Demo
             {
                 MessageBox.Show(ex.Message);
             }
-            
+
         }
 
+        /// <summary>
+        /// Deletes customer from database using the supplied customer ID.
+        /// If the customer exists, they are deleted from the database. If the customer
+        /// doesn't exist an exception is thrown.
+        /// </summary>
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -162,9 +176,7 @@ namespace Demo
                 else
                 {
                     listCustomerNames.Items.Remove(listCustomerNames.SelectedItem);
-
                     store.Delete(customer.ID);
-                    
                     ClearAllFields();
                     
                     MessageBox.Show("Customer deleted successfully.");
@@ -176,6 +188,10 @@ namespace Demo
             }
         }
 
+        /// <summary>
+        /// When a customer is selected in the ListBox, their details are displayed
+        /// in the form fields.
+        /// </summary>
         private void listCustomerNames_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -201,6 +217,9 @@ namespace Demo
             }
         }
 
+        /// <summary>
+        /// Creates new instance of CustomerDetails form and passes it the customer database.
+        /// </summary>
         private void btnListAll_Click(object sender, RoutedEventArgs e)
         {
             CustomerDetails customerDetails = new CustomerDetails(store);
