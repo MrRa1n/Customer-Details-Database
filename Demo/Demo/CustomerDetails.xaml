@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Demo"
         mc:Ignorable="d"
-        Title="CustomerDetails" Loaded="frmCustomerDetails_Loaded">
+        Title="Customer Details" Loaded="frmCustomerDetails_Loaded">
     <Grid Margin="0,0,3.6,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="241*"/>

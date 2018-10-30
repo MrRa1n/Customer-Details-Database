@@ -5,7 +5,10 @@ using BusinessObjects;
 namespace Demo
 {
     /// <summary>
-    /// Interaction logic for CustomerDetails.xaml
+    /// Author: Toby Cook
+    /// Description: Interaction logic for Customer Details form where information 
+    /// is displayed to the user in an easy to view manner.
+    /// Last Modified: 30/10/2018
     /// </summary>
     public partial class CustomerDetails : Window
     {
@@ -17,6 +20,10 @@ namespace Demo
             _store = store;
         }
 
+        /// <summary>
+        /// Upon the form loading, the DataTable is populated with database information.
+        /// The information is then displayed using a DataGrid control.
+        /// </summary>
         private void frmCustomerDetails_Loaded(object sender, RoutedEventArgs e)
         {
             

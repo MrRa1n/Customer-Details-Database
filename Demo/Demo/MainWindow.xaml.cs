@@ -7,8 +7,9 @@ namespace Demo
 {
     /// <summary>
     /// Author: Toby Cook
-    /// Description: Interaction logic for MainWindow.xaml
-    /// Last Modified: 29/10/2018
+    /// Description: Interaction logic for Customer form where the user can 
+    /// input and display information from database.
+    /// Last Modified: 30/10/2018
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -23,7 +24,8 @@ namespace Demo
         }
 
         /// <summary>
-        /// Displays the information about the customer in the form fields.
+        /// Displays the information about the customer in the form fields. If customer is null, 
+        /// an exception is thrown.
         /// </summary>
         /// <param name="customer">Customer object</param>
         private void DisplayCustomerDetails(Customer customer)
@@ -38,7 +40,7 @@ namespace Demo
                 txtTelephone.Text = customer.TelephoneNo;
                 listPreferredContact.SelectedIndex = (int)customer.PreferredContact;
             }
-            catch (Exception ex)
+            catch (NullReferenceException ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -164,7 +166,7 @@ namespace Demo
             {
                 if (String.IsNullOrWhiteSpace(txtCustomerID.Text))
                 {
-                    throw new Exception("No customer ID provided.");
+                    throw new ArgumentNullException("No customer ID provided.");
                 }
 
                 // Check to see if the customer exists in the store
